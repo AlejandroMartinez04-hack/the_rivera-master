@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Resources\CitaResource; // Importar el recurso CitaResource 
+use App\Http\Resources\CitaCollection; // Importar la colección CitaCollection
+use App\Http\Requests\StoreCitasRequest; // Importar la request StoreRecetasRequest
+use App\Http\Requests\UpdateCitasRequest; // Importar la request UpdateRecetasRequest
+use Symfony\Component\HttpFoundation\Response; // Importar la clase Response para los códigos de estado HTTP
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use App\Models\Cita; // Importar el modelo Cita
+
+class CitaController extends Controller
+{
+    // Muestra todas las cit6as
+    public function index(){
+        // return Receta::all(); // Devuelve todas las recetas
+        // return Receta::with('categoria', 'etiquetas', 'user')->get(); // Carga las relaciones categoria, etiquetas y user
+        $citas = Cita::with('cliente', 'empleado','servicios')->get();// Carga las relaciones clientes, empleados y servicios
+        return CitaResource::collection($citas); // Devuelve todas las citas como recurso API
+    }
+
+    // Muestra una cita a partir de su id
+    public function show(Cita $cita){
+        // return $receta; // Devuelve la receta
+        //return $receta->load('categoria', 'etiquetas', 'user'); // Carga las relaciones categoria, etiquetas y user
+        $cita = $cita->load('cliente', 'empleado', 'servicios'); // Carga las relaciones clientes, empleados y servicios
+        return new CitaResource($cita); // Devuelve la receta como recurso API 
+    }
+
+    // Almacena una nueva cita 
+    public function store(StoreCitasRequest $request){  // Usar la request StoreCitasRequest para validar los datos
+        $cita = Cita::create($request->all());  // Crear una nueva cita con los datos validados
+
+        // $cita->clientes()->attach(json_decode($request->clientes));  // Asociar los clientes a la cita (decodificar el JSON recibido)
+
+        // $cita->empleados()->attach(json_decode($request->empleados));  // Asociar los empleados a la cita (decodificar el JSON recibido)
+        
+        // $cita->servicios()->attach(json_decode($request->servicios));  // Asociar los servicios a la cita (decodificar el JSON recibido)    
+       
+        // Devolver la cita creada como recurso API con código de estado 201 (creado) 
+        return response()->json(new CitaResource($cita), Response::HTTP_CREATED); 
+    }
+
+    // Actualiza una cita existente
+    public function update(UpdateCitasRequest $request, Cita $cita){  // Usar la request UpdateCitasRequest para validar los datos
+        $cita->update($request->all());  // Actualizar la cita con los datos validados
+
+        if($clientes = json_decode($request->clientes)){  // Si se reciben clientes, decodificar el JSON
+            $cita->clientes()->sync($clientes);  // Sincronizar los clientes (eliminar los que no están y agregar los nuevos)
+        }
+
+        if($empleados = json_decode($request->empleados)){  // Si se reciben empleados, decodificar el JSON
+            $cita->empleados()->sync($empleados);  // Sincronizar los empleados (eliminar los que no están y agregar los nuevos)
+        }
+
+        if($servicios = json_decode($request->servicios)){  // Si se reciben servicios, decodificar el JSON
+            $cita->servicios()->sync($servicios);  // Sincronizar los servicios (eliminar los que no están y agregar los nuevos)
+        }
+
+        // Devolver la cita actualizada como recurso API con código de estado 200 (OK)
+        return response()->json(new CitaResource($cita), Response::HTTP_OK);
+    }
+
+     // Elimina una cita existente
+    public function destroy(Cita $cita){  // Inyectar la cita a eliminar
+        $cita->delete();  // Eliminar la cita
+
+        // Devolver una respuesta vacía con código de estado 204 (No Content)
+        return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+    
+}
