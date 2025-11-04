@@ -7,6 +7,8 @@ use App\Http\Resources\CitaCollection; // Importar la colección CitaCollection
 use App\Http\Requests\StoreCitasRequest; // Importar la request StoreRecetasRequest
 use App\Http\Requests\UpdateCitasRequest; // Importar la request UpdateRecetasRequest
 use Symfony\Component\HttpFoundation\Response; // Importar la clase Response para los códigos de estado HTTP
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Importar el trait AuthorizesRequests para la autorización de politicas
+
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -33,20 +35,17 @@ class CitaController extends Controller
 
     // Almacena una nueva cita 
     public function store(StoreCitasRequest $request){  // Usar la request StoreCitasRequest para validar los datos
-        $cita = Cita::create($request->all());  // Crear una nueva cita con los datos validados
+        $cita = $request->user()->citas()->create($request->all());  // Crear una nueva cita asociada al usuario autenticado
+        $cita->servicios()->attach(json_decode($request->servicios));  // Asociar lps servicios a la cita (decodificar el JSON recibido)
+        //$cita = Cita::create($request->all());  // Crear una nueva cita con los datos validado
 
-        // $cita->clientes()->attach(json_decode($request->clientes));  // Asociar los clientes a la cita (decodificar el JSON recibido)
-
-        // $cita->empleados()->attach(json_decode($request->empleados));  // Asociar los empleados a la cita (decodificar el JSON recibido)
-        
-        // $cita->servicios()->attach(json_decode($request->servicios));  // Asociar los servicios a la cita (decodificar el JSON recibido)    
-       
-        // Devolver la cita creada como recurso API con código de estado 201 (creado) 
+        // Devolver la cita creada como recurso API con código de estado 201 (creado)
         return response()->json(new CitaResource($cita), Response::HTTP_CREATED); 
     }
 
     // Actualiza una cita existente
     public function update(UpdateCitasRequest $request, Cita $cita){  // Usar la request UpdateCitasRequest para validar los datos
+        $this->authorize('update', $cita);  // Autorizar la acción usando la política CitaPolicy
         $cita->update($request->all());  // Actualizar la cita con los datos validados
 
         if($clientes = json_decode($request->clientes)){  // Si se reciben clientes, decodificar el JSON
@@ -62,11 +61,12 @@ class CitaController extends Controller
         }
 
         // Devolver la cita actualizada como recurso API con código de estado 200 (OK)
-        return response()->json(new CitaResource($cita), Response::HTTP_OK);
+        return response()->json(new CitaResource($cita), Response::HTTP_ACCEPTED);
     }
 
      // Elimina una cita existente
     public function destroy(Cita $cita){  // Inyectar la cita a eliminar
+        $this->authorize('delete', $cita);  // Autorizar la acción usando la política CitaPolicy
         $cita->delete();  // Eliminar la cita
 
         // Devolver una respuesta vacía con código de estado 204 (No Content)

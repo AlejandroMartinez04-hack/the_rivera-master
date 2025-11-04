@@ -23,7 +23,7 @@ class UpdateCitasRequest extends FormRequest
     {
         return [
             'empleado_id' => 'sometimes|exists:empleados,id', // El empleado_id es opcional y debe existir en la tabla empleados
-            'cliente_id' => 'sometimes|exists:clientes,id', // El cliente_id es opcional y debe exsistir en la tabla clientes
+            //'cliente_id' => 'sometimes|exists:clientes,id', // El cliente_id es opcional y debe exsistir en la tabla clientes
             'fecha_hora' => 'sometimes|date', // La fecha_hora es opcional y debe ser una fecha valida
             'servicios' => 'sometimes|array', // Los son servicios son opcionales y deben ser un array
         ];

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('telefono');
             $table->string('password');
+            //$table->boolean('es_admin')->default(false); // ← Campo para administradores
             $table->rememberToken();
             $table->timestamps();
         });

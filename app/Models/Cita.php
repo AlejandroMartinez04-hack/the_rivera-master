@@ -12,7 +12,7 @@ class Cita extends Model
 
     protected $fillable = [ //campos que se pueden asignar masivamente
         'empleado_id',
-        'cliente_id',
+        //'cliente_id',
         //'servicio_id',
         'fecha_hora',
     ];

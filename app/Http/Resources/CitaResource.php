@@ -21,7 +21,7 @@ class CitaResource extends JsonResource
                 'empleado' => $this->empleado->name,  // Nombre del empleado asociado a la cita
                 'cliente' => $this->cliente->name,    // Nombre del cliente
                 'fecha_hora' => $this->fecha_hora, // Fecha y hora de la cita
-                'servicios' => $this->servicios->pluck('name')->implode(', '),  // Lista de nombres de los servicios asociados a la cita separadas por comas 
+                'servicios' => $this->servicios->pluck('name'),  // Lista de nombres de los servicios asociados a la cita separadas por comas 
                 // pluck extrae los nombres de las etiquetas y implode los une en una cadena separada por comas
             ],
         ];  

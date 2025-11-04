@@ -7,6 +7,8 @@ use App\Http\Resources\ClienteCollection; // Importar la colección ClienteColle
 use App\Http\Requests\StoreClientesRequest; // Importar la request StoreClientesRequest
 use App\Http\Requests\UpdateClientesRequest; // Importar la request UpdateClientesRequest
 use Symfony\Component\HttpFoundation\Response; // Importar la clase Response para los códigos de estado HTTPz
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Importar el trait AuthorizesRequests para la autorización de politicas
+
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -43,7 +45,7 @@ class ClienteController extends Controller
         $cliente->update($request->all());  // Actualizar el cliente con los datos validados
 
         // Devolver el cliente actualizado como recurso API con código de estado 200 (OK)
-        return response()->json(new ClienteResource($cliente), Response::HTTP_OK);
+        return response()->json(new ClienteResource($cliente), Response::HTTP_ACCEPTED);
     }
 
      // Elimina un cliente existente
