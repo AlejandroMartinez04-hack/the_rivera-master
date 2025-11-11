@@ -20,6 +20,7 @@ class ServicioController extends Controller
     use AuthorizesRequests;
     // Muestra todos los servicios
     public function index(){
+        $this->authorize('ver servicios');
         // return Categoria::all(); // Devuelve todos los clientes
         return new ServicioCollection(Servicio::all());  // Devuelve todos los servicios como recurso API
     }
@@ -27,6 +28,7 @@ class ServicioController extends Controller
     // Muestra un servicio a partir de su id
     public function show(Servicio $servicio){
         // return $categoria; // Devuelve la categoria
+        $this->authorize('ver servicios');
         $servicio = $servicio->load('citas');  // Carga las citas relacionadas con el servicio
         return new ServicioResource($servicio);  // Devuelve el servicio como recurso API     
     }
@@ -35,7 +37,7 @@ class ServicioController extends Controller
     public function store(StoreServiciosRequest $request){  // Usar la request StoreServiciosRequest para validar los datos
         // //$servicio = Servicio::create($request->all());  // Crear un nuevo servicio con los datos validados    
         // //$this->authorize('create', Servicio::class);  // Autorizar la acción usando la política ServicioPolicy
-        // $servicio = $request->user()->servicios()->create($request->all());  // Crear una nueva cita asociada al empleado autenticado
+        //$servicio = $request->empleado()->servicios()->create($request->all());  // Crear una nueva cita asociada al empleado autenticado
         // $servicio->citas()->attach(json_decode($request->citas));  // Asociar las citas a los servicios (decodificar el JSON recibido)
 
 
@@ -43,6 +45,7 @@ class ServicioController extends Controller
         // // Devolver el servicio creado como recurso API con código de estado 201 (creado) 
         // return response()->json(new ServicioResource($servicio), Response::HTTP_CREATED); 
         // Verifica que el usuario autenticado sea un empleado
+        $this->authorize('crear servicios');
     if (! $request->user() instanceof \App\Models\Empleado) {
         return response()->json([
             'message' => 'Solo los empleados pueden crear servicios.',
@@ -65,6 +68,7 @@ class ServicioController extends Controller
     //         'message' => 'Solo los empleados pueden crear servicios.',
     //     ], 403);
     // }
+        $this->authorize('editar servicios');
         $this->authorize('update', $servicio);  // Autorizar la acción usando la política ServicioPolicy
         
         $servicio->update($request->all());  // Actualizar el servicio con los datos validados
@@ -81,6 +85,7 @@ class ServicioController extends Controller
     //         'message' => 'Solo los empleados pueden crear servicios.',
     //     ], 403);
     // }
+        $this->authorize('eliminar servicios');
         $this->authorize('delete', $servicio);  // Autorizar la acción usando la política ServicioPolicy
         $servicio->delete();  // Eliminar el servicio
 

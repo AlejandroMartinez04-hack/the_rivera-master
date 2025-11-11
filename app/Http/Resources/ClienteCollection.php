@@ -23,6 +23,7 @@ class ClienteCollection extends ResourceCollection
                     'email' => $cliente->email,
                     'telefono' => $cliente->telefono,
                     //'password' => $cliente->password,
+                    'empleado_id' => $cliente->empleado_id,
                 ],
             ];
         })->toArray(); // Convertir la colección mapeada a un array

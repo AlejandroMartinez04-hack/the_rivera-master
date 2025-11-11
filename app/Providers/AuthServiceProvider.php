@@ -6,6 +6,8 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Models\Servicio;
 use App\Policies\ServicioPolicy;
+use App\Models\Cliente;
+use App\Policies\ClientePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Servicio::class => ServicioPolicy::class,
+        Cliente::class => ClientePolicy::class,
+        Empleado::class => EmpleadoPolicy::class,
     ];
 
     /**
@@ -24,5 +28,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        $this->registerPolicies();
     }
 }

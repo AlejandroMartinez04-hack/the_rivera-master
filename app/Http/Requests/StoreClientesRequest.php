@@ -26,6 +26,7 @@ class StoreClientesRequest extends FormRequest
             'email' => 'required|email|unique:clientes,email', // El email es obligatorio, debe ser un email valido y unico en la tabla clientes
             'telefono' => 'nullable|string|max:20', // El telefono es opcional, debe ser una cadena y no exceder los 20 caracteres
             'password' => 'required|string|min:8', // El password es obligatorio, debe ser una cadena, tener al menos 8 caracteres y debe coincidir con el campo password_confirmation
+            //'empleado_id' => 'required|exists:empleados,id', // El empleado_id es obligatorio y debe existir en la tabla empleados
         ];
     }
 }

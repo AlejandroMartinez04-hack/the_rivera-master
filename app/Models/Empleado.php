@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles; //Importar el trait HasRoles para manejar roles y permisos
 
 class Empleado extends Authenticatable
 {
+    protected $guard_name = 'web';// Definir el guard para Spatie Roles y Permisos
     /** @use HasFactory<\Database\Factories\ClienteFactory> */
-     use HasApiTokens, HasFactory, Notifiable;
+     use HasApiTokens, HasFactory, Notifiable, HasRoles;// Usar el trait HasRoles para manejar roles y permisos
 
     /**
      * The attributes that are mass assignable.
@@ -60,35 +62,9 @@ class Empleado extends Authenticatable
          //return $this->belongsToMany(Servicio::class, 'empleado_servicio', 'empleado_id', 'servicio_id');
          return $this->belongsToMany(Servicio::class);
      }
+
+        // Relación 1:N (Un empleado tiene muchos clientes)
+        public function clientes(){
+            return $this->hasMany(Cliente::class);
+        }
 }
-
-// class Empleado extends Model
-// {
-//     /** @use HasFactory<\Database\Factories\EmpleadoFactory> */
-//     use HasFactory;
-
-//     protected $fillable = [ //campos que se pueden asignar masivamente
-//         'name',
-//         'email',
-//         'telefono',
-//         'password',
-//     ];
-
-//     // Relación 1:N (Un empleado tiene muchas citas)
-//     public function citas(){
-//          return $this->hasMany(Cita::class);
-//      }
-
-//      // Relación N:N (Un empleado puede tener muchos servicios)
-//      public function servicios(){
-//         //return $this->belongsToMany(Servicio::class, 'empleado_servicio', 'empleado_id', 'servicio_id');
-//         return $this->belongsToMany(Servicio::class);
-//     }
-
-//     // Relación con la tabla pivote (un cliente puede tener muchos registros en la tabla pivote)
-//     //public function detallesCita()
-//     //{
-//     //return $this->hasMany(CitaEmpleadoClienteServicio::class);
-//     //}
-
-// }

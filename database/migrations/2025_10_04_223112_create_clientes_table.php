@@ -18,6 +18,10 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('telefono');
             $table->string('password');
+            // Relaciones con otras tablas
+            $table->unsignedBigInteger('empleado_id');
+            //Claves foraneas
+            $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

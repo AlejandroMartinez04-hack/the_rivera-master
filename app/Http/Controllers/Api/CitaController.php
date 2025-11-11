@@ -17,10 +17,12 @@ use App\Models\Cita; // Importar el modelo Cita
 
 class CitaController extends Controller
 {
+    use AuthorizesRequests;
     // Muestra todas las cit6as
     public function index(){
         // return Receta::all(); // Devuelve todas las recetas
         // return Receta::with('categoria', 'etiquetas', 'user')->get(); // Carga las relaciones categoria, etiquetas y user
+        $this->authorize('ver citas');
         $citas = Cita::with('cliente', 'empleado','servicios')->get();// Carga las relaciones clientes, empleados y servicios
         return CitaResource::collection($citas); // Devuelve todas las citas como recurso API
     }
@@ -29,12 +31,14 @@ class CitaController extends Controller
     public function show(Cita $cita){
         // return $receta; // Devuelve la receta
         //return $receta->load('categoria', 'etiquetas', 'user'); // Carga las relaciones categoria, etiquetas y user
+        $this->authorize('ver citas');
         $cita = $cita->load('cliente', 'empleado', 'servicios'); // Carga las relaciones clientes, empleados y servicios
         return new CitaResource($cita); // Devuelve la receta como recurso API 
     }
 
     // Almacena una nueva cita 
     public function store(StoreCitasRequest $request){  // Usar la request StoreCitasRequest para validar los datos
+        $this->authorize('crear citas'); 
         $cita = $request->user()->citas()->create($request->all());  // Crear una nueva cita asociada al usuario autenticado
         $cita->servicios()->attach(json_decode($request->servicios));  // Asociar lps servicios a la cita (decodificar el JSON recibido)
         //$cita = Cita::create($request->all());  // Crear una nueva cita con los datos validado
@@ -45,6 +49,7 @@ class CitaController extends Controller
 
     // Actualiza una cita existente
     public function update(UpdateCitasRequest $request, Cita $cita){  // Usar la request UpdateCitasRequest para validar los datos
+        $this->authorize('editar citas');
         $this->authorize('update', $cita);  // Autorizar la acción usando la política CitaPolicy
         $cita->update($request->all());  // Actualizar la cita con los datos validados
 
@@ -66,6 +71,7 @@ class CitaController extends Controller
 
      // Elimina una cita existente
     public function destroy(Cita $cita){  // Inyectar la cita a eliminar
+        $this->authorize('eliminar citas');
         $this->authorize('delete', $cita);  // Autorizar la acción usando la política CitaPolicy
         $cita->delete();  // Eliminar la cita
 

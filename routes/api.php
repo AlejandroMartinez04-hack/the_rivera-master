@@ -21,7 +21,7 @@ Route::post('login/cliente',[ClienteLoginController::class,'store']);
 Route::post('login/empleado',[EmpleadoLoginController::class,'store']);  
 
 // Rutas de Clientes
-//Route::apiResource('clientes', ClienteController::class);
+//Route::post('clientes', [ClienteController::class,'store']);// Ruta para crear clientes
 // Rutas de Empleados
 //Route::apiResource('empleados', EmpleadoController::class);
 // Rutas de Logins
@@ -32,6 +32,7 @@ Route::post('login/empleado',[EmpleadoLoginController::class,'store']);
 // Rutas protegidas por autenticación 
 Route::middleware('auth:sanctum')->group(function () {  
     Route::apiResource('citas', CitaController::class);  // Rutas de citas
+    //Route::apiResource('clientes', ClienteController::class)->except(['store']);
     Route::apiResource('clientes', ClienteController::class);  // Rutas de clientes
     Route::apiResource('empleados', EmpleadoController::class);  // Rutas de empleados
     Route::apiResource('servicios', ServicioController::class);  // Rutas de servicios

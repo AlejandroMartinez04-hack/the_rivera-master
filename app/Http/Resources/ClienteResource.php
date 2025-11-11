@@ -22,6 +22,8 @@ class ClienteResource extends JsonResource
                 'email' => $this->email,
                 'telefono' => $this->telefono,
                 //'password' => $this->password,
+                'empleado' => $this->empleado->name,  // Nombre del empleado asociado a la cita
+                //'empleado_id' => $this->empleado_id,
             ],
             'relaciones' => [  // Estructuramos las relaciones del cliente
                 //'citas' => $this->citas,

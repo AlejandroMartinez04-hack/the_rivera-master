@@ -21,12 +21,14 @@ class EmpleadoController extends Controller
     use AuthorizesRequests;
      // Muestra todos los empleados
     public function index(){
+        $this->authorize('ver empleados');
         // return Categoria::all(); // Devuelve todos los clientes
         return new EmpleadoCollection(Empleado::all());  // Devuelve todos los empleados como recurso API
     }
 
     // Muestra un empleado a partir de su id
     public function show(Empleado $empleado){
+        $this->authorize('ver empleados');
         // return $categoria; // Devuelve la categoria
         $empleado = $empleado->load('citas');  // Carga las citas relacionadas con el empleado
         return new EmpleadoResource($empleado);  // Devuelve el empleado como recurso API        
@@ -34,8 +36,9 @@ class EmpleadoController extends Controller
 
     // Almacena un nuevo empleado 
     public function store(StoreEmpleadosRequest $request){  // Usar la request StoreEmpeadosRequest para validar los datos
-        //$empleado = Empleado::create($request->all());  // Crear un nuevo empleado con los datos validados    
-        $empleado = $request->user()->empleados()->create($request->all());  // Crear un nuevo empleado asociada al usuario autenticado
+        $this->authorize('crear empleados');
+        $empleado = Empleado::create($request->all());  // Crear un nuevo empleado con los datos validados    
+        //$empleado = $request->user()->empleados()->create($request->all());  // Crear un nuevo empleado asociada al usuario autenticado
        
         // Devolver el empleado creado como recurso API con código de estado 201 (creado) 
         return response()->json(new EmpleadoResource($empleado), Response::HTTP_CREATED); 
@@ -43,7 +46,8 @@ class EmpleadoController extends Controller
 
      // Actualiza un empleado existente
     public function update(UpdateEmpleadosRequest $request, Empleado $empleado){  // Usar la request UpdateEmpleadosRequest para validar los datos
-        $this->authorize('update', $empleado);  // Autorizar la acción usando la política EmpleadoPolicy
+        $this->authorize('editar empleados');
+        //$this->authorize('update', $empleado);  // Autorizar la acción usando la política EmpleadoPolicy
         $empleado->update($request->all());  // Actualizar el empleado con los datos validados
 
         // Devolver el empleado actualizado como recurso API con código de estado 200 (OK)
@@ -52,7 +56,8 @@ class EmpleadoController extends Controller
 
      // Elimina un empleado existente
     public function destroy(Empleado $empleado){  // Inyectar el empleado a eliminar
-        $this->authorize('delete', $empleado);  // Autorizar la acción usando la política EmpleadoPolicy
+        $this->authorize('eliminar empleados');
+        //$this->authorize('delete', $empleado);  // Autorizar la acción usando la política EmpleadoPolicy
         $empleado->delete();  // Eliminar el empleado
 
         // Devolver una respuesta vacía con código de estado 204 (No Content)
