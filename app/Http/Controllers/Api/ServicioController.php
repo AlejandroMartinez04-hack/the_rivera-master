@@ -69,7 +69,7 @@ class ServicioController extends Controller
     //     ], 403);
     // }
         $this->authorize('editar servicios');
-        $this->authorize('update', $servicio);  // Autorizar la acción usando la política ServicioPolicy
+        //$this->authorize('update', $servicio);  // Autorizar la acción usando la política ServicioPolicy
         
         $servicio->update($request->all());  // Actualizar el servicio con los datos validados
 
@@ -86,7 +86,7 @@ class ServicioController extends Controller
     //     ], 403);
     // }
         $this->authorize('eliminar servicios');
-        $this->authorize('delete', $servicio);  // Autorizar la acción usando la política ServicioPolicy
+        //$this->authorize('delete', $servicio);  // Autorizar la acción usando la política ServicioPolicy
         $servicio->delete();  // Eliminar el servicio
 
         // Devolver una respuesta vacía con código de estado 204 (No Content)

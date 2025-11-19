@@ -107,7 +107,7 @@ test('update', function () {
     // Sanctum::actingAs(
     //     $cliente=Cliente::factory()->create()->assignRole('Cliente')//Simular autenticación como un cliente
     // );
-    $empleado = Empleado::factory()->create()->assignRole('Administrador');
+    $empleado = Empleado::factory()->create()->assignRole('Administrador');//Crear un empleado de prueba con rol de Administrador
     Sanctum::actingAs($empleado);
 
 
