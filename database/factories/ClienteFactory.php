@@ -26,7 +26,8 @@ class ClienteFactory extends Factory
             'email_verified_at' => now(),
             'telefono' => fake()->phoneNumber(),
             'password' => static::$password ??= Hash::make('password'),
-            'empleado_id' => \App\Models\Empleado::all()->random()->id, // Asignar un Empleado aleatorio existente al cliente
+            //'empleado_id' => \App\Models\Empleado::all()->random()->id, // Asignar un Empleado aleatorio existente al cliente
+             'empleado_id' => \App\Models\Empleado::factory(),
             'remember_token' => Str::random(10),
         ];
     }

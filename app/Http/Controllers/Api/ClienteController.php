@@ -49,7 +49,7 @@ class ClienteController extends Controller
      // Actualiza un cliente existente
     public function update(UpdateClientesRequest $request, Cliente $cliente){  // Usar la request UpdateClientesRequest para validar los datos
         $this->authorize('editar clientes');
-        $this->authorize('update', $cliente);  // Autorizar la acción usando la política ClientePolicy
+        //$this->authorize('update', $cliente);  // Autorizar la acción usando la política ClientePolicy
         $cliente->update($request->all());  // Actualizar el cliente con los datos validados
 
         // Devolver el cliente actualizado como recurso API con código de estado 200 (OK)
@@ -59,7 +59,7 @@ class ClienteController extends Controller
      // Elimina un cliente existente
     public function destroy(Cliente $cliente){  // Inyectar el cliente a eliminar   
         $this->authorize('eliminar clientes');
-        $this->authorize('delete', $cliente);  // Autorizar la acción usando la política ClientePolicy
+        //$this->authorize('delete', $cliente);  // Autorizar la acción usando la política ClientePolicy
         $cliente->delete();  // Eliminar el empleado
 
         // Devolver una respuesta vacía con código de estado 204 (No Content)

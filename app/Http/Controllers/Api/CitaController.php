@@ -72,7 +72,7 @@ class CitaController extends Controller
      // Elimina una cita existente
     public function destroy(Cita $cita){  // Inyectar la cita a eliminar
         $this->authorize('eliminar citas');
-        $this->authorize('delete', $cita);  // Autorizar la acción usando la política CitaPolicy
+        //$this->authorize('delete', $cita);  // Autorizar la acción usando la política CitaPolicy
         $cita->delete();  // Eliminar la cita
 
         // Devolver una respuesta vacía con código de estado 204 (No Content)
