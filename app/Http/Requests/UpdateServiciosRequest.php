@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;  // Importar la interfaz Validator
+use Illuminate\Http\Exceptions\HttpResponseException;  // Importar la excepción HttpResponseException
 
 class UpdateServiciosRequest extends FormRequest
 {
@@ -26,5 +28,14 @@ class UpdateServiciosRequest extends FormRequest
             'precio' => 'sometimes|numeric|min:0', // El precio es opcional, debe ser numerico y mayor o igual a 0
             'duration' => 'sometimes|integer|min:1', // La duracion es opcional, debe ser un entero y mayor o igual a 1
         ];
+    }
+
+    // Manejar la falla de validación y devolver una respuesta JSON personalizada
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Error de validación en la actualización',
+            'errors' => $validator->errors()
+        ], 422));
     }
 }

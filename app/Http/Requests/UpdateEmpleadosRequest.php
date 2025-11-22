@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;  // Importar la interfaz Validator
+use Illuminate\Http\Exceptions\HttpResponseException;  // Importar la excepción HttpResponseException
 
 class UpdateEmpleadosRequest extends FormRequest
 {
@@ -27,5 +29,14 @@ class UpdateEmpleadosRequest extends FormRequest
             'telefono' => 'sometimes|string|max:20', // El telefono es opcional, debe ser una cadena y no exceder 20 caracteres
             'password' => 'sometimes|string|max:500', // La direccion es opcional, debe ser una cadena y no exceder 500 caracteres
         ];
+    }
+
+    // Manejar la falla de validación y devolver una respuesta JSON personalizada
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Error de validación en la actualización',
+            'errors' => $validator->errors()
+        ], 422));
     }
 }

@@ -12,22 +12,13 @@ use App\Http\Controllers\Api\ServicioController;
 use App\Http\Controllers\Api\ClienteLoginController;
 use App\Http\Controllers\Api\EmpleadoLoginController;
 
-// Rutas de Citas
-//Route::apiResource('citas', CitaController::class);
-// Ruta para login
-
 //Route::post('login', [LoginController::class, 'store']);
 Route::post('login/cliente',[ClienteLoginController::class,'store']);
 Route::post('login/empleado',[EmpleadoLoginController::class,'store']);  
-
-// Rutas de Clientes
-//Route::post('clientes', [ClienteController::class,'store']);// Ruta para crear clientes
-// Rutas de Empleados
-//Route::apiResource('empleados', EmpleadoController::class);
-// Rutas de Logins
-//Route::apiResource('logins', LoginController::class);
-//Rutas de Servicios
-//Route::apiResource('servicios', ServicioController::class);
+// Esto ayuda a evitar problemas de CORS en aplicaciones web que consumen esta API 
+Route::options('{all:.*}', function(){
+    return response()->json();
+});
 
 // Rutas protegidas por autenticación 
 Route::middleware('auth:sanctum')->group(function () {  

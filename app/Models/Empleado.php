@@ -9,6 +9,22 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles; //Importar el trait HasRoles para manejar roles y permisos
 
+/**
+ * @OA\Schema(
+ *     schema="Empleado",
+ *     type="object",
+ *     title="Empleado",
+ *     required={"id", "name", "email"},
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="name", type="string", example="Carlos López"),
+ *     @OA\Property(property="email", type="string", example="carlos@mail.com"),
+ *     @OA\Property(property="telefono", type="string", example="5552345678"),
+ *     @OA\Property(property="created_at", type="string", example="2025-01-15 12:30:00"),
+ *     @OA\Property(property="updated_at", type="string", example="2025-01-16 14:10:00")
+ * )
+ */
+
+
 class Empleado extends Authenticatable
 {
     protected $guard_name = 'web';// Definir el guard para Spatie Roles y Permisos

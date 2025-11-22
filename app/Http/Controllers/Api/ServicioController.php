@@ -2,95 +2,167 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\ServicioResource; // Importar el recurso ServicioResource 
-use App\Http\Resources\ServicioCollection; // Importar la colección ServicioCollection
-use App\Http\Requests\StoreServiciosRequest; // Importar la request StoreServiciosRequest
-use App\Http\Requests\UpdateServiciosRequest; // Importar la request UpdateServiciosRequest
-use Symfony\Component\HttpFoundation\Response; // Importar la clase Response para los códigos de estado HTTP
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Importar el trait AuthorizesRequests para la autorización de politicas
-
-
+use App\Http\Resources\ServicioResource;
+use App\Http\Resources\ServicioCollection;
+use App\Http\Requests\StoreServiciosRequest;
+use App\Http\Requests\UpdateServiciosRequest;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Servicio;
 
-use App\Models\Servicio; // Importar el modelo Servicio
-
+/**
+ * @OA\Tag(
+ *     name="Servicios",
+ *     description="Endpoints para la gestión de servicios"
+ * )
+ */
 class ServicioController extends Controller
 {
     use AuthorizesRequests;
-    // Muestra todos los servicios
+    
+    /**
+     * @OA\Get(
+     *     path="/api/servicios",
+     *     summary="Mostrar todos los servicios",
+     *     tags={"Servicios"},
+     *     security={{"bearer_token":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de servicios obtenida correctamente"
+     *     ),
+     *     @OA\Response(response=403, description="No autorizado")
+     * )
+     */
     public function index(){
         $this->authorize('ver servicios');
-        // return Categoria::all(); // Devuelve todos los clientes
-        return new ServicioCollection(Servicio::all());  // Devuelve todos los servicios como recurso API
+        return new ServicioCollection(Servicio::all());
     }
 
-    // Muestra un servicio a partir de su id
+    /**
+     * @OA\Get(
+     *     path="/api/servicios/{id}",
+     *     summary="Mostrar un servicio por ID",
+     *     tags={"Servicios"},
+     *     security={{"bearer_token":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del servicio",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Servicio encontrado"
+     *     ),
+     *     @OA\Response(response=404, description="Servicio no encontrado")
+     * )
+     */
     public function show(Servicio $servicio){
-        // return $categoria; // Devuelve la categoria
         $this->authorize('ver servicios');
-        $servicio = $servicio->load('citas');  // Carga las citas relacionadas con el servicio
-        return new ServicioResource($servicio);  // Devuelve el servicio como recurso API     
+        $servicio = $servicio->load('citas');
+        return new ServicioResource($servicio);
     }
 
-     // Almacena un nuevo servicio 
-    public function store(StoreServiciosRequest $request){  // Usar la request StoreServiciosRequest para validar los datos
-        // //$servicio = Servicio::create($request->all());  // Crear un nuevo servicio con los datos validados    
-        // //$this->authorize('create', Servicio::class);  // Autorizar la acción usando la política ServicioPolicy
-        //$servicio = $request->empleado()->servicios()->create($request->all());  // Crear una nueva cita asociada al empleado autenticado
-        // $servicio->citas()->attach(json_decode($request->citas));  // Asociar las citas a los servicios (decodificar el JSON recibido)
-
-
-       
-        // // Devolver el servicio creado como recurso API con código de estado 201 (creado) 
-        // return response()->json(new ServicioResource($servicio), Response::HTTP_CREATED); 
-        // Verifica que el usuario autenticado sea un empleado
+    /**
+     * @OA\Post(
+     *     path="/api/servicios",
+     *     summary="Crear un nuevo servicio",
+     *     tags={"Servicios"},
+     *     security={{"bearer_token":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name","precio","duracion"},
+     *             @OA\Property(property="name", type="string", example="Corte de cabello"),
+     *             @OA\Property(property="precio", type="number", example=199.99),
+     *             @OA\Property(property="duracion", type="string", example="01:00:00")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Servicio creado correctamente"
+     *     ),
+     *     @OA\Response(response=403, description="No autorizado"),
+     *     @OA\Response(response=422, description="Datos inválidos")
+     * )
+     */
+    public function store(StoreServiciosRequest $request){
         $this->authorize('crear servicios');
-    if (! $request->user() instanceof \App\Models\Empleado) {
-        return response()->json([
-            'message' => 'Solo los empleados pueden crear servicios.',
-        ], 403);
+        if (! $request->user() instanceof \App\Models\Empleado) {
+            return response()->json([
+                'message' => 'Solo los empleados pueden crear servicios.',
+            ], 403);
+        }
+
+        $servicio = $request->user()->servicios()->create($request->all());
+        if($request->has('citas')) {
+            $servicio->citas()->attach(json_decode($request->citas));
+        }
+
+        return response()->json(new ServicioResource($servicio), 201);
     }
 
-    // Crear el servicio
-    $servicio = $request->user()->servicios()->create($request->all());
-    $servicio->citas()->attach(json_decode($request->citas));
-
-    return response()->json(new ServicioResource($servicio), 201);
-
-    }
-
-     // Actualiza un servicio existente
-    public function update(UpdateServiciosRequest $request, Servicio $servicio){  // Usar la request UpdateServiciosRequest para validar los datos
-         // Verifica que el usuario autenticado sea un empleado
-    // if (! $request->user() instanceof \App\Models\Empleado) {
-    //     return response()->json([
-    //         'message' => 'Solo los empleados pueden crear servicios.',
-    //     ], 403);
-    // }
+    /**
+     * @OA\Put(
+     *     path="/api/servicios/{id}",
+     *     summary="Actualizar un servicio existente",
+     *     tags={"Servicios"},
+     *     security={{"bearer_token":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del servicio",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Servicio actualizado"),
+     *             @OA\Property(property="precio", type="number", example=300),
+     *             @OA\Property(property="duracion", type="string", example="00:45:00")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=202,
+     *         description="Servicio actualizado correctamente"
+     *     ),
+     *     @OA\Response(response=404, description="Servicio no encontrado"),
+     *     @OA\Response(response=403, description="No autorizado")
+     * )
+     */
+    public function update(UpdateServiciosRequest $request, Servicio $servicio){
         $this->authorize('editar servicios');
-        //$this->authorize('update', $servicio);  // Autorizar la acción usando la política ServicioPolicy
-        
-        $servicio->update($request->all());  // Actualizar el servicio con los datos validados
-
-        // Devolver el servicio actualizado como recurso API con código de estado 200 (OK)
+        $servicio->update($request->all());
         return response()->json(new ServicioResource($servicio), Response::HTTP_ACCEPTED);
     }
 
-     // Elimina un servicio existente
-    public function destroy(Servicio $servicio){  // Inyectar el servicio a eliminar
-         // Verifica que el usuario autenticado sea un empleado
-    // if (! $request->user() instanceof \App\Models\Empleado) {
-    //     return response()->json([
-    //         'message' => 'Solo los empleados pueden crear servicios.',
-    //     ], 403);
-    // }
+    /**
+     * @OA\Delete(
+     *     path="/api/servicios/{id}",
+     *     summary="Eliminar un servicio",
+     *     tags={"Servicios"},
+     *     security={{"bearer_token":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del servicio",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Servicio eliminado correctamente"
+     *     ),
+     *     @OA\Response(response=403, description="No autorizado"),
+     *     @OA\Response(response=404, description="Servicio no encontrado")
+     * )
+     */
+    public function destroy(Servicio $servicio){
         $this->authorize('eliminar servicios');
-        //$this->authorize('delete', $servicio);  // Autorizar la acción usando la política ServicioPolicy
-        $servicio->delete();  // Eliminar el servicio
-
-        // Devolver una respuesta vacía con código de estado 204 (No Content)
+        $servicio->delete();
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
-    
 }
