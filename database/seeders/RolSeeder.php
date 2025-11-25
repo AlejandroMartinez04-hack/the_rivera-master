@@ -33,7 +33,7 @@ class RolSeeder extends Seeder
         Permission::create(['name' => 'eliminar clientes'])->syncRoles([$admin]);
 
         // Permisos de empleados
-        Permission::create(['name' => 'ver empleados'])->syncRoles([$admin]);
+        Permission::create(['name' => 'ver empleados'])->syncRoles([$admin,$cliente]);
         Permission::create(['name' => 'crear empleados'])->syncRoles([$admin]);
         Permission::create(['name' => 'editar empleados'])->syncRoles([$admin]);
         Permission::create(['name' => 'eliminar empleados'])->syncRoles([$admin]);
