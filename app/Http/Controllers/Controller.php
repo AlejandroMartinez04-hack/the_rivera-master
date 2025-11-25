@@ -10,7 +10,7 @@ namespace App\Http\Controllers;
  *         email="s22030116@itsch.edu.mx"
  *     )
  * )
- * @OA\Server(url="http://127.0.0.1:8000")
+ * @OA\Server(url="https://therivera-master-production.up.railway.app/")
  * @OA\SecurityScheme(
  *     securityScheme="bearer_token",
  *     type="apiKey",
