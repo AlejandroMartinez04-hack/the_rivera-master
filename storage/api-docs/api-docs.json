@@ -9,7 +9,7 @@
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000"
+            "url": "https://therivera-master-production.up.railway.app"
         }
     ],
     "paths": {
