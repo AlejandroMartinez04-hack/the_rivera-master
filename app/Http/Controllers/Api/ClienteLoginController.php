@@ -79,7 +79,7 @@ class ClienteLoginController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/logout-cliente",
+     *     path="/api/logout/cliente",
      *     summary="Cerrar sesión del cliente",
      *     description="Revoca el token actual del cliente autenticado.",
      *     tags={"Login Cliente"},

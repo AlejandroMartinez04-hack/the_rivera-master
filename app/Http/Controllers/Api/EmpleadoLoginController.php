@@ -78,7 +78,7 @@ class EmpleadoLoginController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/logout-empleado",
+     *     path="/api/logout/empleado",
      *     summary="Cerrar sesión del empleado",
      *     description="Revoca el token actual del empleado autenticado.",
      *     tags={"Login Empleado"},

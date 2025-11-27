@@ -493,14 +493,14 @@
                 }
             }
         },
-        "/api/logout-cliente": {
+        "/api/logout/cliente": {
             "delete": {
                 "tags": [
                     "Login Cliente"
                 ],
                 "summary": "Cerrar sesión del cliente",
                 "description": "Revoca el token actual del cliente autenticado.",
-                "operationId": "942bc697463ad2ca45f6348e419b2d93",
+                "operationId": "dc3b8a941507593d83ca1e43c6771380",
                 "responses": {
                     "200": {
                         "description": "Cierre de sesión exitoso",
@@ -808,14 +808,14 @@
                 }
             }
         },
-        "/api/logout-empleado": {
+        "/api/logout/empleado": {
             "delete": {
                 "tags": [
                     "Login Empleado"
                 ],
                 "summary": "Cerrar sesión del empleado",
                 "description": "Revoca el token actual del empleado autenticado.",
-                "operationId": "258605a334935dd3ccf129cfd0b5ae13",
+                "operationId": "ea767d76da7a437169b8127d6be101f7",
                 "responses": {
                     "200": {
                         "description": "Cierre de sesión exitoso",
