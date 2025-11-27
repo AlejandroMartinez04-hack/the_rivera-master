@@ -418,7 +418,7 @@
                 ],
                 "summary": "Iniciar sesión de cliente",
                 "description": "Autentica a un cliente y devuelve un token de acceso.",
-                "operationId": "f05859e189b106824578d468b38add5e",
+                "operationId": "724d066b66b52afedbe347dc4015f085",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -493,7 +493,7 @@
                 }
             }
         },
-        "/api/logout/cliente": {
+        "/api/logout-cliente": {
             "delete": {
                 "tags": [
                     "Login Cliente"
@@ -733,7 +733,7 @@
                 ],
                 "summary": "Iniciar sesión de empleado",
                 "description": "Autentica a un empleado y devuelve un token de acceso.",
-                "operationId": "65ebce8c1651c87ad59ce859cf385c21",
+                "operationId": "8ac569f2b4f617b93329420c44914c73",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -808,7 +808,7 @@
                 }
             }
         },
-        "/api/logout/empleado": {
+        "/api/logout-empleado": {
             "delete": {
                 "tags": [
                     "Login Empleado"
