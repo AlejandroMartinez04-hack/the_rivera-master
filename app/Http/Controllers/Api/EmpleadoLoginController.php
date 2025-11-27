@@ -16,7 +16,7 @@ class EmpleadoLoginController extends Controller
      *     summary="Iniciar sesión de empleado",
      *     description="Autentica a un empleado y devuelve un token de acceso.",
      *     tags={"Login Empleado"},
-     *
+    security={{"bearer_token":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(

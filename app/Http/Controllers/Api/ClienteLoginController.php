@@ -83,7 +83,7 @@ class ClienteLoginController extends Controller
      *     summary="Cerrar sesión del cliente",
      *     description="Revoca el token actual del cliente autenticado.",
      *     tags={"Login Cliente"},
-     *     security={{"sanctum":{}}},
+    *     security={{"bearer_token":{}}},
      *
      *     @OA\Response(
      *         response=200,
