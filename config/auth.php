@@ -36,6 +36,12 @@ return [
     */
 
     'guards' => [
+        //'web' => [
+        'sanctum' => [
+            //'driver' => 'session',
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -70,7 +76,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => env('AUTH_MODEL', App\Models\User::class, App\Models\Cliente::class, App\Models\Empleado::class),
         ],
 
         // 'users' => [
