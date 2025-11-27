@@ -411,7 +411,7 @@
                 }
             }
         },
-        "/api/login-cliente": {
+        "/api/login/cliente": {
             "post": {
                 "tags": [
                     "Login Cliente"
@@ -493,7 +493,7 @@
                 }
             }
         },
-        "/api/logout-cliente": {
+        "/api/logout/cliente": {
             "delete": {
                 "tags": [
                     "Login Cliente"
@@ -726,7 +726,7 @@
                 }
             }
         },
-        "/api/login-empleado": {
+        "/api/login/empleado": {
             "post": {
                 "tags": [
                     "Login Empleado"
@@ -808,7 +808,7 @@
                 }
             }
         },
-        "/api/logout-empleado": {
+        "/api/logout/empleado": {
             "delete": {
                 "tags": [
                     "Login Empleado"
