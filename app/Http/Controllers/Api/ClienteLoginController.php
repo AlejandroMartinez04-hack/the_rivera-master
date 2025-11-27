@@ -22,7 +22,7 @@ class ClienteLoginController extends Controller
      *         @OA\JsonContent(
      *             required={"correo","contraseña","dispositivo"},
      *             @OA\Property(property="correo", type="string", example="cliente@gmail.com"),
-     *             @OA\Property(property="contraseña", type="string", example="12345678"),
+     *             @OA\Property(property="contraseña", type="string", example="password"),
      *             @OA\Property(property="dispositivo", type="string", example="android")
      *         )
      *     ),

@@ -436,7 +436,7 @@
                                     },
                                     "contraseña": {
                                         "type": "string",
-                                        "example": "12345678"
+                                        "example": "password"
                                     },
                                     "dispositivo": {
                                         "type": "string",
@@ -521,7 +521,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "bearer_token": []
                     }
                 ]
             }
@@ -751,11 +751,11 @@
                                     },
                                     "contraseña": {
                                         "type": "string",
-                                        "example": "12345678"
+                                        "example": "password"
                                     },
                                     "dispositivo": {
                                         "type": "string",
-                                        "example": "ios"
+                                        "example": "windows"
                                     }
                                 },
                                 "type": "object"

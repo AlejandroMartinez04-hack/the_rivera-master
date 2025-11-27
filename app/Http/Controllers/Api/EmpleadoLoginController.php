@@ -16,14 +16,13 @@ class EmpleadoLoginController extends Controller
      *     summary="Iniciar sesión de empleado",
      *     description="Autentica a un empleado y devuelve un token de acceso.",
      *     tags={"Login Empleado"},
-    security={{"bearer_token":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"correo","contraseña","dispositivo"},
      *             @OA\Property(property="correo", type="string", example="empleado@gmail.com"),
-     *             @OA\Property(property="contraseña", type="string", example="12345678"),
-     *             @OA\Property(property="dispositivo", type="string", example="ios")
+     *             @OA\Property(property="contraseña", type="string", example="password"),
+     *             @OA\Property(property="dispositivo", type="string", example="windows")
      *         )
      *     ),
      *
