@@ -411,6 +411,121 @@
                 }
             }
         },
+        "/api/login-cliente": {
+            "post": {
+                "tags": [
+                    "Login Cliente"
+                ],
+                "summary": "Iniciar sesión de cliente",
+                "description": "Autentica a un cliente y devuelve un token de acceso.",
+                "operationId": "f05859e189b106824578d468b38add5e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "correo",
+                                    "contraseña",
+                                    "dispositivo"
+                                ],
+                                "properties": {
+                                    "correo": {
+                                        "type": "string",
+                                        "example": "cliente@gmail.com"
+                                    },
+                                    "contraseña": {
+                                        "type": "string",
+                                        "example": "12345678"
+                                    },
+                                    "dispositivo": {
+                                        "type": "string",
+                                        "example": "android"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "attributes": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nombre": {
+                                                            "type": "string",
+                                                            "example": "Juan Pérez"
+                                                        },
+                                                        "correo": {
+                                                            "type": "string",
+                                                            "example": "cliente@gmail.com"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "1|sdf89sd8f7sd8f7s8df7"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Credenciales incorrectas"
+                    }
+                }
+            }
+        },
+        "/api/logout-cliente": {
+            "delete": {
+                "tags": [
+                    "Login Cliente"
+                ],
+                "summary": "Cerrar sesión del cliente",
+                "description": "Revoca el token actual del cliente autenticado.",
+                "operationId": "942bc697463ad2ca45f6348e419b2d93",
+                "responses": {
+                    "200": {
+                        "description": "Cierre de sesión exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cierre de sesión exitoso."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/empleados": {
             "get": {
                 "tags": [
@@ -609,6 +724,121 @@
                         "description": "Empleado no encontrado"
                     }
                 }
+            }
+        },
+        "/api/login-empleado": {
+            "post": {
+                "tags": [
+                    "Login Empleado"
+                ],
+                "summary": "Iniciar sesión de empleado",
+                "description": "Autentica a un empleado y devuelve un token de acceso.",
+                "operationId": "65ebce8c1651c87ad59ce859cf385c21",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "correo",
+                                    "contraseña",
+                                    "dispositivo"
+                                ],
+                                "properties": {
+                                    "correo": {
+                                        "type": "string",
+                                        "example": "empleado@gmail.com"
+                                    },
+                                    "contraseña": {
+                                        "type": "string",
+                                        "example": "12345678"
+                                    },
+                                    "dispositivo": {
+                                        "type": "string",
+                                        "example": "ios"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "attributes": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nombre": {
+                                                            "type": "string",
+                                                            "example": "Carlos López"
+                                                        },
+                                                        "correo": {
+                                                            "type": "string",
+                                                            "example": "empleado@gmail.com"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "1|token12345"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Credenciales incorrectas"
+                    }
+                }
+            }
+        },
+        "/api/logout-empleado": {
+            "delete": {
+                "tags": [
+                    "Login Empleado"
+                ],
+                "summary": "Cerrar sesión del empleado",
+                "description": "Revoca el token actual del empleado autenticado.",
+                "operationId": "258605a334935dd3ccf129cfd0b5ae13",
+                "responses": {
+                    "200": {
+                        "description": "Cierre de sesión exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cierre de sesión exitoso."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/servicios": {
@@ -874,6 +1104,14 @@
         {
             "name": "Servicios",
             "description": "Endpoints para la gestión de servicios"
+        },
+        {
+            "name": "Login Cliente",
+            "description": "Login Cliente"
+        },
+        {
+            "name": "Login Empleado",
+            "description": "Login Empleado"
         }
     ],
     "security": [

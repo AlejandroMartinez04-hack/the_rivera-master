@@ -15,7 +15,6 @@ use App\Http\Controllers\Api\EmpleadoLoginController;
 //Route::post('login', [LoginController::class, 'store']);
 Route::post('login/cliente',[ClienteLoginController::class,'store']);
 Route::post('login/empleado',[EmpleadoLoginController::class,'store']);  
-Route::apiResource('citas', CitaController::class);  // Rutas de citas
 // Esto ayuda a evitar problemas de CORS en aplicaciones web que consumen esta API 
 Route::options('{all:.*}', function(){
     return response()->json();
@@ -24,6 +23,7 @@ Route::options('{all:.*}', function(){
 // Rutas protegidas por autenticación 
 Route::middleware('auth:sanctum')->group(function () {  
     //Route::apiResource('clientes', ClienteController::class)->except(['store']);
+    Route::apiResource('citas', CitaController::class);  // Rutas de citas
     Route::apiResource('clientes', ClienteController::class);  // Rutas de clientes
     Route::apiResource('empleados', EmpleadoController::class);  // Rutas de empleados
     Route::apiResource('servicios', ServicioController::class);  // Rutas de servicios

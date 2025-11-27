@@ -57,7 +57,7 @@ class CitaController extends Controller
     public function index(){
         // return Receta::all(); // Devuelve todas las recetas
         // return Receta::with('categoria', 'etiquetas', 'user')->get(); // Carga las relaciones categoria, etiquetas y user
-        //$this->authorize('ver citas');
+        $this->authorize('ver citas');
         $citas = Cita::with('cliente', 'empleado','servicios')->get();// Carga las relaciones clientes, empleados y servicios
         return CitaResource::collection($citas); // Devuelve todas las citas como recurso API
     }
