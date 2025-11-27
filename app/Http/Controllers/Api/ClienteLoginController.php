@@ -12,7 +12,7 @@ class ClienteLoginController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="/api/login-cliente",
+     *     path="/api/login/cliente",
      *     summary="Iniciar sesión de cliente",
      *     description="Autentica a un cliente y devuelve un token de acceso.",
      *     tags={"Login Cliente"},

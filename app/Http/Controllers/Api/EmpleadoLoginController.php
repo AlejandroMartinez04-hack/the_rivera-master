@@ -12,7 +12,7 @@ class EmpleadoLoginController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="/api/login-empleado",
+     *     path="/api/login/empleado",
      *     summary="Iniciar sesión de empleado",
      *     description="Autentica a un empleado y devuelve un token de acceso.",
      *     tags={"Login Empleado"},
