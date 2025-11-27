@@ -1081,10 +1081,16 @@
         },
         "securitySchemes": {
             "bearer_token": {
+                "type": "apiKey",
+                "description": "Sanctum bearer token",
+                "name": "Authorization",
+                "in": "header"
+            },
+            "bearerAuth": {
                 "type": "http",
                 "scheme": "bearer",
                 "bearerFormat": "JWT",
-                "description": "Bearer token en el header Authorization"
+                "description": "Token Bearer usando Laravel Sanctum"
             }
         }
     },
@@ -1116,7 +1122,7 @@
     ],
     "security": [
         {
-            "bearer_token": []
+            "bearerAuth": []
         }
     ]
 }

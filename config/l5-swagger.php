@@ -168,7 +168,7 @@ return [
         /*
          * API security definitions. Will be generated into documentation file.
         */
-        'securityDefinitions' => [
+       /* 'securityDefinitions' => [
             // Definición explícita del esquema de seguridad usado en las anotaciones
             'securitySchemes' => [
                 // Nombre usado en los controladores: "bearer_token"
@@ -185,7 +185,23 @@ return [
                     'bearer_token' => [],
                 ],
             ],
+        ],*/
+        'securityDefinitions' => [
+    'securitySchemes' => [
+        'bearerAuth' => [
+            'type' => 'http',
+            'scheme' => 'bearer',
+            'bearerFormat' => 'JWT',
+            'description' => 'Token Bearer usando Laravel Sanctum',
         ],
+    ],
+    'security' => [
+        [
+            'bearerAuth' => [],
+        ],
+    ],
+],
+
 
         /*
          * Set this to `true` in development mode so that docs would be regenerated on each request
