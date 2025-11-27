@@ -1081,10 +1081,10 @@
         },
         "securitySchemes": {
             "bearer_token": {
-                "type": "apiKey",
-                "description": "Sanctum bearer token",
-                "name": "Authorization",
-                "in": "header"
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "Bearer token en el header Authorization"
             }
         }
     },
@@ -1112,6 +1112,11 @@
         {
             "name": "Login Empleado",
             "description": "Login Empleado"
+        }
+    ],
+    "security": [
+        {
+            "bearer_token": []
         }
     ]
 }
