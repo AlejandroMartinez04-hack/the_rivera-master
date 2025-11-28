@@ -36,8 +36,8 @@ return [
     */
 
     'guards' => [
-        //'web' => [
-        'sanctum' => [
+        'web' => [
+        //'sanctum' => [
             //'driver' => 'session',
             'driver' => 'sanctum',
             'provider' => 'users',
@@ -74,15 +74,15 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class, App\Models\Cliente::class, App\Models\Empleado::class),
-        ],
+       // 'users' => [
+         //   'driver' => 'eloquent',
+           // 'model' => env('AUTH_MODEL', App\Models\User::class, App\Models\Cliente::class, App\Models\Empleado::class),
+        //],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'users' => [
+             'driver' => 'database',
+             'table' => 'users',
+         ],
         'clientes' => [
         'driver' => 'eloquent',
         'model' => App\Models\Cliente::class,
