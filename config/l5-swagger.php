@@ -168,7 +168,7 @@ return [
         /*
          * API security definitions. Will be generated into documentation file.
         */
-        /*
+        
         'securityDefinitions' => [
             // Definición explícita del esquema de seguridad usado en las anotaciones
             'securitySchemes' => [
@@ -180,7 +180,7 @@ return [
                     'bearerFormat' => 'JWT',
                     'description' => 'Bearer token en el header Authorization',
                 ],
-            ],*/
+            ],
             'security' => [
                 [
                     'bearer_token' => [],
