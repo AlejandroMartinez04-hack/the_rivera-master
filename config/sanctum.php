@@ -34,10 +34,10 @@ return [
     |
     */
 
-    //'guard' => ['web'],
+    'guard' => ['web'],
     // Ajuste: evitar usar un guard 'api' inexistente en `config/auth.php`.
     // Comprueba los guards definidos en config/auth.php si prefieres otro valor.
-    'guard' => ['sanctum', 'web'],
+    //'guard' => ['sanctum', 'web'],
 
     /*
     |--------------------------------------------------------------------------
